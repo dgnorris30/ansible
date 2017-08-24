@@ -1,0 +1,32 @@
+--- # install java 
+- hosts: all
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: install JAVA 
+    yum:
+      name: java-1.8.0-openjdk-devel
+      state: latest
+  - name: add group "admins"
+    group:
+      name: admins
+      state: present
+      gid: 1020
+  - name: create user ansible
+    user:
+      name: ansible
+      comment: "ansible user"
+      shell: bin/bash
+      uid: 1050
+      group: admins
+      append: yes
+  - name: copy java file 
+    copy:
+      src:
+      dest: 
+      owner: root
+      group: root
+      mode: 0754
