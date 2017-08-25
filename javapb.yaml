@@ -25,8 +25,8 @@
       append: yes
   - name: copy java file 
     copy:
-      src:
-      dest: 
+      src: /home/Documents/HelloWorld.java
+      dest: /home/HelloWorld.java
       owner: root
       group: root
       mode: 0754
