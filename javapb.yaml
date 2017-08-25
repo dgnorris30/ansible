@@ -1,6 +1,6 @@
 --- # install java 
 - hosts: all
-  remote_user: ansible
+  remote_user: user
   become: yes
   become_method: sudo
   connection: ssh
@@ -25,7 +25,7 @@
       append: yes
   - name: copy java file 
     copy:
-      src: /home/Documents/HelloWorld.java
+      src: /home/dgnorris/Documents/HelloWorld.java
       dest: /home/HelloWorld.java
       owner: root
       group: root
