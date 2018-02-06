@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: tar and gzip 
+    shell: tar -czf {{item.name}} {{item.path}}
+      args:
+        creates: {{item.name}}
+        chdir: /home/ansible
+    with_items:
+      - { name: 'filelogs.tar.gz' path: '/home/ansible/files/logs'}
+      - { name: 'varlog.tar.gz' path: '/var/logs' } 
+  

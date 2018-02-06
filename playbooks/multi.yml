@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: copy to prod
+    get_url:
+      url: http://rhel.ansible.com/testfile1
+      dest: /home/ansible/files/prod
+    when: "'production' in group_names"
+  - name: copy to dev
+    get_url: 
+      url: http://rhel.ansible.com/testfile2
+      dest: /home/ansible/files/dev
+    when: "'development' in group_names"
+
+

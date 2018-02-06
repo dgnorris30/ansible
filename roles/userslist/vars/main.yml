@@ -1,0 +1,13 @@
+---
+class:
+  - manager
+  - tech
+  - finance
+users:
+  - bob
+  - frank
+  - jill
+revoked:
+  - ed
+  - kyle
+  - will

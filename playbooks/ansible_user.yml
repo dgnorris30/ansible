@@ -1,0 +1,8 @@
+---
+- hosts: all 
+  become: yes
+  vars:
+    user: dgnorris
+    group: wheel
+  roles:
+     - { role: '/home/dgnorris/Projects/Ansible/roles/create_user'}

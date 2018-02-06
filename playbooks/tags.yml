@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: copy testfile3 
+    get_url:
+      url: http://rhel.ansible.com/testfile3
+      dest: /home/ansible/files/
+    tags: file3
+  - name: copy testfile4
+    get_url:
+      url: http://rhel.anisble.com/testfile4
+      dest: /var/scripts
+    tags: file4

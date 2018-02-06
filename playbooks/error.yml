@@ -1,0 +1,15 @@
+---
+- hosts: all
+  remote_user: vagrant
+  tasks:
+  - name: copy file
+    copy:
+      src: /home/dgnorris/Projects/Ansible/files/error.sh
+      dest: /home/vagrant/
+      mode: 0755
+  - name: run script
+    shell: "/home/vagrant/error.sh"
+    register: error_out
+    ignore_errors: yes
+  - debug:
+      var: error_out

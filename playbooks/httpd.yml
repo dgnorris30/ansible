@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+   - name: install httpd
+     block:
+      - yum:
+          name: "{{item}}"
+          state: installed
+        with_items:
+          - httpd
+          - vim 
+     when: ansible_distribution == "CentOS" 
+   - name: install links 
+     block:
+      - yum:
+          name: "{{item}}"
+          state: latest
+        with_items:
+          - php
+          - links
+     when: ansible_distribution_file_variety != "RedHat"
+
+

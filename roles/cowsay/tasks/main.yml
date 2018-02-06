@@ -1,0 +1,49 @@
+---
+  - name: install epel repo 
+    yum:
+      name: epel-release
+      state: latest
+    tags:
+      - install 
+  - name: install cowsay and fortune
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - cowsay
+      - fortune-mod.x86_64
+    tags:
+      - install
+
+  - name: ensure group exist
+    group:
+      name: ansible 
+      state: present
+    tags:
+      - manage 
+  - name: ensure users exists
+    user:
+      name: "{{ item }}"
+      state: present 
+      groups: ansible
+      append: yes 
+    with_items:
+      - vagrant
+      - ansible
+    tags:
+      - manage
+
+  - name: create tux fortune
+    shell: fortune | cowsay -f tux 
+    register: linux_fortune
+    tags:
+      - make
+  - name: mkfile 
+    copy: 
+      content: "{{linux_fortune.stdout}}" 
+      dest: /home/vagrant/fortune.txt
+      owner: vagrant
+      group: ansible
+      mode: 0750
+    tags:
+      - make

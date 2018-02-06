@@ -1,0 +1,73 @@
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [tower:database] ***********************************************************************************
+
+TASK [check_config_static : Ensure expected variables are defined] **************************************
+[0;36mskipping: [localhost] => (item=tower_package_name)  => {"changed": false, "item": "tower_package_name", "skip_reason": "Conditional result was False", "skipped": true}[0m
+[0;36mskipping: [localhost] => (item=tower_package_version)  => {"changed": false, "item": "tower_package_version", "skip_reason": "Conditional result was False", "skipped": true}[0m
+[0;36mskipping: [localhost] => (item=tower_package_release)  => {"changed": false, "item": "tower_package_release", "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+TASK [check_config_static : Ensure at least one tower host is defined] **********************************
+[0;36mskipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+TASK [check_config_static : Ensure only one database host exists] ***************************************
+[0;36mskipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+TASK [check_config_static : Ensure when postgres host is defined that the port is defined] **************
+[0;36mskipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+TASK [check_config_static : Ensure that when a database host is specified, that pg_host is defined] *****
+[0;36mskipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+TASK [check_config_static : Ensure that when a database host is specified, that pg_port is defined] *****
+[0;36mskipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+TASK [check_config_static : HA mode requires an external postgres database with pg_host defined] ********
+[0;36mskipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+TASK [check_config_static : HA mode requires an external postgres database with pg_port defined] ********
+[0;36mskipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+TASK [config_dynamic : Set database to internal or external] ********************************************
+[0;32mok: [localhost] => {"ansible_facts": {"config_dynamic_database": "internal"}, "changed": false}[0m
+
+TASK [config_dynamic : Database decision] ***************************************************************
+[0;32mok: [localhost] => {[0m
+[0;32m    "config_dynamic_database": "internal"[0m
+[0;32m}[0m
+
+TASK [config_dynamic : Set postgres host and port to local if not set] **********************************
+[0;32mok: [localhost] => {"ansible_facts": {"pg_host": "127.0.0.1", "pg_port": 5432}, "changed": false}[0m
+
+TASK [config_dynamic : Ensure connectivity to hosts and gather facts] ***********************************
+[0;32mok: [localhost][0m
+
+TASK [config_dynamic : Get effective uid] ***************************************************************
+[0;33mchanged: [localhost] => {"changed": true, "cmd": ["id", "-u"], "delta": "0:00:00.002537", "end": "2017-09-19 17:35:03.748294", "rc": 0, "start": "2017-09-19 17:35:03.745757", "stderr": "", "stderr_lines": [], "stdout": "0", "stdout_lines": ["0"]}[0m
+
+TASK [config_dynamic : Ensure user is root] *************************************************************
+[1;35m [WARNING]: when statements should not include jinja2 templating delimiters such as {{ }} or {% %}.[0m
+[1;35mFound: uid.stdout != '{{ config_dynamic_user }}'[0m
+[1;35m[0m
+[0;36mskipping: [localhost] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}[0m
+
+PLAY [Group nodes by OS distribution] *******************************************************************
+
+TASK [Gathering Facts] **********************************************************************************
+[0;32mok: [localhost][0m
+
+TASK [group hosts by distribution] **********************************************************************
+[0;32mok: [localhost] => {"add_group": "Fedora-26", "changed": false}[0m
+
+PLAY [Group supported distributions] ********************************************************************
+[0;36mskipping: no hosts matched[0m
+
+PLAY [Ensure all node OS distributions are supported] ***************************************************
+
+TASK [fail for unsupported distribution] ****************************************************************
+[0;31mfatal: [localhost]: FAILED! => {"changed": false, "failed": true, "msg": "Fedora 26 is not a supported OS for a Tower installation.  Supported OSes include Red Hat Enterprise Linux 7, CentOS 7, or Ubuntu 14.04/16.04."}[0m
+	to retry, use: --limit @/home/dgnorris/ansible/ansible-tower-setup-3.1.5/install.retry
+
+PLAY RECAP **********************************************************************************************
+[0;31mlocalhost[0m                  : [0;32mok=7   [0m [0;33mchanged=1   [0m unreachable=0    [0;31mfailed=1   [0m
+

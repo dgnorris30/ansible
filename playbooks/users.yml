@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: yes
+  vars_files:
+   - /home/dgnorris/Projects/Ansible/roles/userslist/vars/main.yml
+  tasks:
+  - name: create groups
+    group:
+      name: "{{ item }}"
+      state: present 
+    with_items:
+      - "{{class}}"
+  - name: create users
+    user:
+      name: "{{ item }}"
+      state: present 
+    with_items:
+       - "{{users}}"
+  - name: revoke users
+    user:
+      name: "{{item}}"
+      state: absent 
+    with_items:
+      - "{{revoked}}"

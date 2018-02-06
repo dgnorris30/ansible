@@ -1,0 +1,25 @@
+---
+- name: create group
+  group:
+    name: "{{ group }}" 
+    state: present 
+- name: create user 
+  user:
+    name: "{{ user }}" 
+    state: present
+    groups: "{{ group }}" 
+    append: yes
+- name: create path to ssh key
+  file:
+    path: /home/{{ user }}/.ssh
+    state: directory 
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0700
+- name: copy ssh key 
+  copy:
+    src: /home/dgnorris/.ssh/id_rsa.pub  
+    dest: /home/{{ user }}/.ssh/authorized_keys  
+    owner: "{{ user }}" 
+    group: "{{ group }}" 
+    mode: 0644 

@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    description: "{{ ansible_hostname }}"
+    name: world
+  tasks:
+    - name:
+      template: 
+        src: '/home/dgnorris/Projects/Ansible/files/template.j2'
+        dest: '/home/vagrant/index.html'

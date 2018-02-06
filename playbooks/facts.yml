@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: create directory 
+    file:
+      path: /home/ansible/files/facts/
+      state: directory 
+  - name: create file with facts 
+    lineinfile:
+      path: /home/ansible/files/facts/oneline.txt
+      state: present
+      create: yes
+      line: "{{ansible_hostname}}, {{ansible_default_ipv4.address}}, {{ansible_default_ipv4.macaddress}}, {{anisble_processor_count}}"

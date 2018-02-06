@@ -1,0 +1,30 @@
+---
+- hosts: all 
+  become: yes
+  tasks:
+  - name: install httpd
+    yum:
+      name: httpd
+      state: present 
+  - name: enable service
+    service:
+      name: httpd
+      enabled: yes
+  - name: get htaccess and htpasswd files
+    get_url:
+      url:  http://rhel7.anisble.com/{{ item }}
+      dest: /var/www/html/.{{ item }}
+      mode: 0644
+      owner: apache
+    with_items: 
+     - htaccess
+     - htpasswd
+   - name: change httpd.conf
+     lineinfile: 
+       path: /etc/httpd/conf/httpd.conf
+       regexp: 'AllowOverride None'
+       line: 'AllowOverride Authconfig'
+   - name: restart httpd
+     service:
+       name: httpd
+       state: restarted

@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    jboss_version: 7.0.0      
+    jboss_name: jboss-eap-{{ jboss_version }}     
+    jboss_url: https://developers.redhat.com/download-manager/file/{{ jboss_name }}.zip
+  tasks:
+  - name: install unzip  
+    yum:
+      name: unzip
+      state: present    
+  - name: copy Jboss EAP
+    copy:
+      src: /home/dgnorris/applicationServers/jboss-eap-7.0.0.zip
+      dest: /home/vagrant/
+      #  - name: unzip
+      # unarchive: 
+      # src: /home/vagrant/jboss-eap-7.0.0.zip
+      # dest: /home/vagrant/
+  - name:
+    shell: unzip /home/vagrant/jboss-eap-7.0.0.zip
+

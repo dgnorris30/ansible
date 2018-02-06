@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: copy if not present 
+    copy:
+      src: /home/dgnorris/Projects/Ansible/files/exist.txt
+      dest: /home/vagrant
+      force: no 
+
